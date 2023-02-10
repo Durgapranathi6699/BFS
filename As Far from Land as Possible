@@ -1,0 +1,38 @@
+class Solution {
+    int directions[][]=new int[][]{{-1,0},{1,0},{0,-1},{0,1}};
+    public int maxDistance(int[][] grid) {
+        boolean vis[][]=new boolean[grid.length][grid[0].length];
+        Queue<int[]> q=new LinkedList<>();//store x,y values
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[i].length;j++){
+                if(grid[i][j]==1){//add all the lands in a queue
+                q.add(new int[]{i,j});
+                vis[i][j]=true;
+                }
+            }
+        }
+        int level=-1;
+        //bfs traversal
+        while(!q.isEmpty()){
+            int n=q.size();
+            for(int i=0;i<n;i++){
+                int a[]=q.poll();
+                //each time take out one value and explore all directions
+                 int x=a[0];
+                 int y=a[1];
+                 for(int dir[]:directions){
+                     int newx=x+dir[0];
+                     int newy=y+dir[1];
+                     //if they are in range make them visited and add into the queue
+                     if(newx>=0 && newx<grid.length && newy>=0 && newy<grid[0].length 
+                     && !vis[newx][newy]){
+                         vis[newx][newy]=true;
+                     q.add(new int[]{newx,newy});
+                      }
+                 }
+            }
+            level++;
+        }
+        return level<=0?-1:level;
+    }
+}
