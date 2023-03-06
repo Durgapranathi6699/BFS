@@ -1,0 +1,45 @@
+class Solution {
+   public int minJumps(int[] arr) {
+       //case 3     indexs having same element are stored
+      Map<Integer,List<Integer>> map=new HashMap<>();//value ,indexes
+      for(int i=0;i<arr.length;i++){
+          if(map.containsKey(arr[i])){
+              List<Integer> l=map.get(arr[i]);
+              l.add(i);
+              map.put(arr[i],l);
+          }else{
+              List<Integer> l =new ArrayList<>();
+              l.add(i);
+              map.put(arr[i],l);
+          }
+      }
+   //BFS
+   //for index idx 
+   //3 possible cases   
+   //idx+1  , idx-1,  index of same val (get it from map)
+     boolean vis[]=new boolean[arr.length];
+        Queue<Integer>q=new LinkedList<>();
+        q.add(0);
+        int level=0;
+        while(!q.isEmpty()){
+            int n=q.size();
+            for(int i=0;i<n;i++){
+                int idx=q.remove();
+                vis[idx]=true;
+                if(idx==arr.length-1) return level;//reached end of array
+               List<Integer> l=map.get(arr[idx]);
+                if(idx>1)             l.add(idx-1); //case 1
+                if(idx<arr.length)    l.add(idx+1); //case2
+                
+                for(int k:l){                       //case3
+                    if(!vis[k]){
+                        q.add(k);
+                    }
+                }
+              l.clear();
+            }
+            level++;-
+        }
+        return 0;
+    }
+}
