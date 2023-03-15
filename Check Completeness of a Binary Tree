@@ -18,3 +18,21 @@ class Solution {
     }
    
 }
+
+
+//DFS 
+int noofnodes=count(root);
+    return dfs(root,1,noofnodes);
+    }
+    int count(TreeNode root){
+        if(root==null)return 0;
+        return 1+count(root.left)+count(root.right);
+    }
+   boolean dfs(TreeNode root,int idx,int nodes){
+       if(root==null)return true;
+       if(idx>nodes){
+           return false;
+       }
+       return dfs(root.left,2*idx,nodes) && dfs(root.right,2*idx+1,nodes);
+   }
+}
